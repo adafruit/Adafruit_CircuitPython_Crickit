@@ -102,7 +102,7 @@ class _DriveList(_DeviceList):
         # To save space, import only when needed.
         from adafruit_seesaw.pwmout import PWMOut
         drive = PWMOut(self._seesaw, pin_or_pins)
-        drive.frequency = 50
+        drive.frequency = 1000
         return drive
 
 class CrickitTouchIn:
