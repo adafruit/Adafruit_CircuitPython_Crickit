@@ -1,8 +1,5 @@
-Simple test
-------------
+Examples
+--------
 
-Ensure your device works with this simple test.
-
-.. literalinclude:: ../examples/crickit_simpletest.py
-    :caption: examples/crickit_simpletest.py
-    :linenos:
+The ``examples`` contains simple examples for controlling a number of different
+devices, such as servos and DC motors.

@@ -1,11 +1,13 @@
 # Crickit library demo - Capacitive touch
 
 import time
-from adafruit_crickit import crickit
+from adafruit_crickit.terminals import TOUCH1
+from adafruit_crickit.crickit import crickit
 
-# Turn on Drive 1 for 1 second
+# Create touch object.
+touch1 = crickit.touch(TOUCH1)
+
 while True:
- for i in (1, 2, 3, 4):
-     if crickit.touch[i]:
-         print("Pad", i, "touched")
-time.sleep(0.25)
+    if touch1:
+        print("Touched terminal Touch 1"))
+    time.sleep(0.25)

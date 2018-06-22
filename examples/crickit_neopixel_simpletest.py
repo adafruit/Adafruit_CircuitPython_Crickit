@@ -4,10 +4,11 @@
 # On the Crickit FeatherWing, the NeoPixel terminal is controlled by seesaw.
 
 import time
-from adafruit_crickit import crickit
+from adafruit_crickit.terminals import NEOPIXEL
+from adafruit_crickit.crickit import crickit
 
 # Strip or ring of 8 NeoPixels
-crickit.init_neopixel(8)
+neopixels = crickit.neopixels(NEOPIXEL, 8)
 
 while True:
     crickit.neopixel.fill(0)
