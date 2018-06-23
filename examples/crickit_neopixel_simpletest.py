@@ -11,11 +11,11 @@ from adafruit_crickit.crickit import crickit
 neopixels = crickit.neopixels(NEOPIXEL, 8)
 
 while True:
-    crickit.neopixel.fill(0)
+    neopixels.fill(0)
     time.sleep(1)
-    crickit.neopixel[0] = (100, 0, 0)
-    crickit.neopixel[1] = (0, 100, 0)
-    crickit.neopixel[2] = (0, 0, 100)
+    neopixels[0] = (100, 0, 0)
+    neopixels[1] = (0, 100, 0)
+    neopixels[2] = (0, 0, 100)
     time.sleep(1)
-    crickit.neopixel.fill(100, 100, 100)
+    neopixels.fill(100, 100, 100)
     time.sleep(1)
