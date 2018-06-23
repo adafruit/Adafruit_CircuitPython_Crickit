@@ -42,10 +42,14 @@ SIGNAL6 = const(10)
 SIGNAL7 = const(9)
 SIGNAL8 = const(8)
 
-SERVO1 = const(17)
-SERVO2 = const(16)
-SERVO3 = const(15)
-SERVO4 = const(14)
+_SIGNAL_SET = set((SIGNAL1, SIGNAL2, SIGNAL3, SIGNAL4, SIGNAL5, SIGNAL6, SIGNAL7, SIGNAL8))
+
+SERVO1 = const(14)
+SERVO2 = const(15)
+SERVO3 = const(16)
+SERVO4 = const(17)
+
+_SERVO_SET = set((SERVO1, SERVO2, SERVO3, SERVO4))
 
 MOTOR1A = const(22)
 MOTOR1B = const(23)
@@ -54,16 +58,29 @@ MOTOR2B = const(18)
 
 _MOTOR1_SET = set((MOTOR1A, MOTOR1B))
 _MOTOR2_SET = set((MOTOR2A, MOTOR2B))
-_MOTOR_SET = set((MOTOR1A, MOTOR1B, MOTOR2A, MOTOR2B))
+_MOTOR_SET = _MOTOR1_SET | _MOTOR2_SET
 
-DRIVE1 = const(13)
-DRIVE2 = const(12)
-DRIVE3 = const(43)
-DRIVE4 = const(42)
+#  Drive terminals numbers on the FeatherWing Crickit. are the reverse of those on the CPX Crickit.
 
-_DRIVE_SET = set((DRIVE1, DRIVE2, DRIVE3, DRIVE4))
+CPX_DRIVE1 = const(42)
+CPX_DRIVE2 = const(43)
+CPX_DRIVE3 = const(12)
+CPX_DRIVE4 = const(13)
+
+FEATHER_DRIVE1 = const(13)
+FEATHER_DRIVE2 = const(12)
+FEATHER_DRIVE3 = const(43)
+FEATHER_DRIVE4 = const(42)
+
+_DRIVE_SET = set((CPX_DRIVE1, CPX_DRIVE2, CPX_DRIVE3, CPX_DRIVE4))
+
+_PWM_SET = _MOTOR_SET | _SERVO_SET | _DRIVE_SET
 
 TOUCH1 = const(4)
 TOUCH2 = const(5)
 TOUCH3 = const(6)
 TOUCH4 = const(7)
+
+_TOUCH_SET = set((TOUCH1, TOUCH2, TOUCH3, TOUCH4))
+
+NEOPIXEL = 20

@@ -48,9 +48,11 @@ import busio
 
 #pylint: disable=wrong-import-position
 sys.path.insert(0, ".frozen")   # Prefer frozen modules over local.
-from adafruit_seesaw.seesaw import Seesaw
-from adafruit_seesaw.crickit import Crickit_Pinmap
+from adafruit_crickit.terminals import (NEOPIXEL, _SIGNAL_SET,
+                                        _MOTOR1_SET, _MOTOR2_SET, _MOTOR_SET,
+                                        _DRIVE_SET, _PWM_SET, _TOUCH_SET)
 
+from adafruit_seesaw.seesaw import Seesaw
 # This is very common so import it in advance.
 # Takes less memory to import PWMOut once than have multiple import statements.
 # Each import statement is about 60 bytes.
@@ -82,26 +84,6 @@ class CrickitTouchIn:
         """Whether the touch pad is being touched or not. (read-only)"""
         return self.raw_value > self.threshold
 
-class CrickitDigitalOut:
-    """Basic DigitalOut functionality"""
-    def __init__(self, seesaw, pin):
-        self._seesaw = seesaw
-        self._pin = pin
-        self._seesaw.pin_mode(pin, self._seesaw.OUTPUT)
-        self._value = False
-        self.value = False
-
-    @property
-    def value(self, value):
-        """Terminal level: True=HIGH, False=LOW"""
-        if not isinstance(value, bool):
-            raise ValueError("value must be True or False")
-        self._value = value
-        self._seesaw.digital_write(self._pin, value)
-
-    @value.setter
-    def value(self):
-        return self._value
 
 class Crickit:
     """Represents a Crickit board."""
@@ -124,7 +106,7 @@ class Crickit:
 
         return self._seesaw
 
-    def servo(self, terminal, actuation_range=180, min_pulse=1000, max_pulse=2000):
+    def servo(self, terminal, *, actuation_range=180, min_pulse=1000, max_pulse=2000):
         """Create an adafruit_motor.servo.Servo.
 
         .. code-block:: python
@@ -137,16 +119,16 @@ class Crickit:
         # Set to 90 degrees.
         servo1.angle = 90
         """
-        if terminal not in Crickit_Pinmap.pwm_pins:
+        if terminal not in _PWM_SET:
             raise ValueError(_TERMINALS_NOT_VALID)
 
         from adafruit_motor.servo import Servo
 
         pwm = PWMOut(self._seesaw, terminal)
         pwm.frequency = 50
-        return Servo(pwm, actuation_range, min_pulse, max_pulse)
+        return Servo(pwm, actuation_range=actuation_range, min_pulse=min_pulse, max_pulse=max_pulse)
 
-    def continuous_servo(self, terminal, min_pulse=1000, max_pulse=2000):
+    def continuous_servo(self, terminal, *, min_pulse=1000, max_pulse=2000):
         """Create an adafruit_motor.servo.ContinuousServo.
 
         .. code-block:: python
@@ -158,14 +140,14 @@ class Crickit:
         # Start spinning backwards at half speed.
         servo1.throttle = -0.5
         """
-        if terminal not in Crickit_Pinmap.pwm_pins:
+        if terminal not in _PWM_SET:
             raise ValueError(_TERMINALS_NOT_VALID)
 
         from adafruit_motor.servo import ContinuousServo
 
         pwm = PWMOut(self._seesaw, terminal)
         pwm.frequency = 50
-        return ContinuousServo(pwm, min_pulse, max_pulse)
+        return ContinuousServo(pwm, min_pulse=min_pulse, max_pulse=max_pulse)
 
     def dc_motor(self, terminal1, terminal2):
         """Create an adafruit_motor.motor.DCMotor.
@@ -184,7 +166,6 @@ class Crickit:
         motor2.throttle = 0.5
         """
 
-        from adafruit_crickit.terminals import _MOTOR1_SET, _MOTOR2_SET
         # Make sure pins are valid and both are either MOTOR1 or MOTOR2.
         # Use set comparison to ignore order.
         if set((terminal1, terminal2)) not in (_MOTOR1_SET, _MOTOR2_SET):
@@ -213,45 +194,30 @@ class Crickit:
 
         """
         terminals = (terminal1, terminal2, terminal3, terminal4)
-        from adafruit_crickit.terminals import _DRIVE_SET, _MOTOR_SET
         if set(terminals) not in (_DRIVE_SET, _MOTOR_SET):
             raise ValueError(_TERMINALS_NOT_VALID)
 
         from adafruit_motor.stepper import StepperMotor
         return StepperMotor(*(PWMOut(self._seesaw, terminal) for terminal in terminals))
 
-    def digital_out(self, terminal):
-        """Simple on/off digital output
-
-        .. code-block:: python
-
-        import time
-        from adafruit_crickit.terminals import DRIVE2
-
-        drive2 = adafruit_crickit.digital_out(DRIVE2)
-
-        # Turn on Drive 2 for 1 second.
-        drive2.value = True
-        time.sleep(1)
-        drive2.value = False
-        """
-        return CrickitDigitalOut(self._seesaw, terminal)
-
-    def pwm_out(self, terminal, duty_cycle=0, frequency=500):
+    def pwm_out(self, terminal, duty_cycle=0, frequency=1000):
         """adafruit_motor.servo.Servo objects for the Servo terminals 1 through 4.
 
+        Note that the default `frequency` is 1000, not 500, which is the default
+        for `pulseio.PWMOut`. 1000 is a better default for the Drive terminals.
+
         .. code-block:: python
 
-        from adafruit_crickit.terminals import DRIVE2
+        from adafruit_crickit.terminals import CPX_DRIVE2
         from adafruit_crickit.crickit import crickit
 
-        # Create general PWM on DRIVE2 terminal.
-        pwm_drive2 = crickit.pwm_out(DRIVE2, frequency=1000)
+        # Create general PWM on CPX_DRIVE2 terminal.
+        drive2 = crickit.pwm_out(CPX_DRIVE2)
 
-        # Turn on 50% duty cycle for DRIVE2
-        pwm_drive2.duty_cycle = int(0.5 * 65535)
+        # Turn on 50% duty cycle for CPX_DRIVE2
+        drive2.fraction = 0.5
         """
-        if terminal not in Crickit_Pinmap.pwm_pins:
+        if terminal not in _PWM_SET:
             raise ValueError(_TERMINALS_NOT_VALID)
 
         pwm = PWMOut(self._seesaw, terminal)
@@ -272,6 +238,8 @@ class Crickit:
         if touch1.value:
             print("Touch 1 touched")
         """
+        if terminal not in _TOUCH_SET:
+            raise ValueError(_TERMINALS_NOT_VALID)
         return CrickitTouchIn(self._seesaw, terminal)
 
     def neopixel(self, terminal, n, *, bpp=3, brightness=1.0, auto_write=True, pixel_order=None):
@@ -296,9 +264,15 @@ class Crickit:
         """
         from adafruit_seesaw.neopixel import NeoPixel
 
+        if terminal not in _SIGNAL_SET and terminal != NEOPIXEL:
+            raise ValueError(_TERMINALS_NOT_VALID)
         return NeoPixel(self._seesaw, terminal, n, bpp=bpp,
                         brightness=brightness, auto_write=auto_write,
                         pixel_order=pixel_order)
+
+    def reset(self):
+        """Reset the whole Crickit board."""
+        self._seesaw.sw_reset()
 
 crickit = Crickit(Seesaw(busio.I2C(board.SCL, board.SDA))) # pylint: disable=invalid-name
 """A singleton instance to control a single Crickit board, controlled by the default I2C pins."""
