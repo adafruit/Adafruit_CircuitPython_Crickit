@@ -100,8 +100,9 @@ class Crickit:
         from adafruit_crickit.terminals import SIGNAL4
         from adafruit_crickit.crickit import crickit
 
-        crickit.seesaw.pin_mode(SIGNAL4, ss.OUTPUT)
-        crickit.seesaw.digital_write(SIGNAL4], True)
+        ss = crickit.seesaw
+        ss.pin_mode(SIGNAL4, ss.OUTPUT)
+        ss.digital_write(SIGNAL4], True)
         """
 
         return self._seesaw
