@@ -1,4 +1,4 @@
-# This is a mock example showing typical usage of the library for each kind of the device.
+# This is a mock example showing typical usage of the library for each kind of device.
 
 # crickit is a singleton object
 from adafruit_crickit.crickit import crickit
