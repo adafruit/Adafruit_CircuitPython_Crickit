@@ -10,5 +10,5 @@ ss = crickit.seesaw
 ss.pin_mode(SIGNAL1, ss.OUTPUT)
 ss.pin_mode(SIGNAL2, ss.INPUT)
 
-ss.digital_write(SIGNAL1)
+ss.digital_write(SIGNAL1, True)
 print(ss.digital_read(SIGNAL2))

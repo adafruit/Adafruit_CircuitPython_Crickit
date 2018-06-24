@@ -8,6 +8,6 @@ from adafruit_crickit.crickit import crickit
 touch1 = crickit.touch(TOUCH1)
 
 while True:
-    if touch1:
-        print("Touched terminal Touch 1"))
+    if touch1.value:
+        print("Touched terminal Touch 1")
     time.sleep(0.25)

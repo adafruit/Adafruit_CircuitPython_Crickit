@@ -8,7 +8,7 @@ from adafruit_crickit.terminals import NEOPIXEL
 from adafruit_crickit.crickit import crickit
 
 # Strip or ring of 8 NeoPixels
-neopixels = crickit.neopixels(NEOPIXEL, 8)
+neopixels = crickit.neopixel(NEOPIXEL, 8)
 
 while True:
     neopixels.fill(0)
@@ -17,5 +17,5 @@ while True:
     neopixels[1] = (0, 100, 0)
     neopixels[2] = (0, 0, 100)
     time.sleep(1)
-    neopixels.fill(100, 100, 100)
+    neopixels.fill((100, 100, 100))
     time.sleep(1)
