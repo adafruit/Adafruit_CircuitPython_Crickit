@@ -20,10 +20,10 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 """
-`Adafruit_Crickit`
+`adafruit_crickit`
 ====================================================
 
-.. todo:: Convenience library for using the Adafruit Crickit robotics boards.
+Convenience library for using the Adafruit Crickit robotics boards.
 
 * Author(s): Dan Halbert
 
@@ -97,12 +97,12 @@ class Crickit:
 
         .. code-block:: python
 
-        from adafruit_crickit.terminals import SIGNAL4
-        from adafruit_crickit.crickit import crickit
+          from adafruit_crickit.terminals import SIGNAL4
+          from adafruit_crickit.crickit import crickit
 
-        ss = crickit.seesaw
-        ss.pin_mode(SIGNAL4, ss.OUTPUT)
-        ss.digital_write(SIGNAL4], True)
+          ss = crickit.seesaw
+          ss.pin_mode(SIGNAL4, ss.OUTPUT)
+          ss.digital_write(SIGNAL4], True)
         """
 
         return self._seesaw
@@ -112,13 +112,12 @@ class Crickit:
 
         .. code-block:: python
 
+          from adafruit_crickit.terminals import SERVO1
+          from adafruit_crickit.crickit import crickit
 
-        from adafruit_crickit.terminals import SERVO1
-        from adafruit_crickit.crickit import crickit
-
-        servo1 = crickit.servo(SERVO1)
-        # Set to 90 degrees.
-        servo1.angle = 90
+          servo1 = crickit.servo(SERVO1)
+          # Set to 90 degrees.
+          servo1.angle = 90
         """
         if terminal not in _PWM_SET:
             raise ValueError(_TERMINALS_NOT_VALID)
@@ -134,12 +133,12 @@ class Crickit:
 
         .. code-block:: python
 
-        from adafruit_crickit.terminals import SERVO1
-        from adafruit_crickit.crickit import crickit
+          from adafruit_crickit.terminals import SERVO1
+          from adafruit_crickit.crickit import crickit
 
-        continuous_servo1 = crickit.continuous_servo1(SERVO1)
-        # Start spinning backwards at half speed.
-        servo1.throttle = -0.5
+          continuous_servo1 = crickit.continuous_servo1(SERVO1)
+          # Start spinning backwards at half speed.
+          servo1.throttle = -0.5
         """
         if terminal not in _PWM_SET:
             raise ValueError(_TERMINALS_NOT_VALID)
@@ -155,16 +154,16 @@ class Crickit:
 
         .. code-block:: python
 
-        from adafruit_crickit.terminals import MOTOR1A, MOTOR1B, MOTOR2A, MOTOR2B
-        from adafruit_crickit.crickit import crickit
+          from adafruit_crickit.terminals import MOTOR1A, MOTOR1B, MOTOR2A, MOTOR2B
+          from adafruit_crickit.crickit import crickit
 
-        # Create dc_motor objects.
-        motor1 = crickit.dc_motor(MOTOR1A, MOTOR1B)
-        motor2 = crickit.dc_motor(MOTOR2A, MOTOR2B)
+          # Create dc_motor objects.
+          motor1 = crickit.dc_motor(MOTOR1A, MOTOR1B)
+          motor2 = crickit.dc_motor(MOTOR2A, MOTOR2B)
 
-        # Run both motors at half-speed.
-        motor1.throttle = 0.5
-        motor2.throttle = 0.5
+          # Run both motors at half-speed.
+          motor1.throttle = 0.5
+          motor2.throttle = 0.5
         """
 
         # Make sure pins are valid and both are either MOTOR1 or MOTOR2.
@@ -184,14 +183,14 @@ class Crickit:
 
         .. code-block:: python
 
-        from adafruit_crickit.terminals import DRIVE1, DRIVE2, DRIVE3, DRIVE4
-        from adafruit_crickit.terminals import MOTOR1A, MOTOR1B, MOTOR2A, MOTOR2B
-        from adafruit_crickit.crickit import crickit
+          from adafruit_crickit.terminals import DRIVE1, DRIVE2, DRIVE3, DRIVE4
+          from adafruit_crickit.terminals import MOTOR1A, MOTOR1B, MOTOR2A, MOTOR2B
+          from adafruit_crickit.crickit import crickit
 
-        stepper_d = crickit.stepper_motor(DRIVE1, DRIVE2, DRIVE3, DRIVE4)
-        stepper_d.onestep(direction=stepper.FORWARD)
-        stepper_m = crickit.stepper_motor(MOTOR1A, MOTOR1B, MOTOR2A, MOTOR2B)
-        stepper_m.onestep(direction=stepper.BACKWARD)
+          stepper_d = crickit.stepper_motor(DRIVE1, DRIVE2, DRIVE3, DRIVE4)
+          stepper_d.onestep(direction=stepper.FORWARD)
+          stepper_m = crickit.stepper_motor(MOTOR1A, MOTOR1B, MOTOR2A, MOTOR2B)
+          stepper_m.onestep(direction=stepper.BACKWARD)
 
         """
         terminals = (terminal1, terminal2, terminal3, terminal4)
@@ -204,19 +203,19 @@ class Crickit:
     def pwm_out(self, terminal, duty_cycle=0, frequency=1000):
         """adafruit_motor.servo.Servo objects for the Servo terminals 1 through 4.
 
-        Note that the default `frequency` is 1000, not 500, which is the default
+        Note that the default ``frequency`` is 1000, not 500, which is the default
         for `pulseio.PWMOut`. 1000 is a better default for the Drive terminals.
 
         .. code-block:: python
 
-        from adafruit_crickit.terminals import CPX_DRIVE2
-        from adafruit_crickit.crickit import crickit
+          from adafruit_crickit.terminals import CPX_DRIVE2
+          from adafruit_crickit.crickit import crickit
 
-        # Create general PWM on CPX_DRIVE2 terminal.
-        drive2 = crickit.pwm_out(CPX_DRIVE2)
+          # Create general PWM on CPX_DRIVE2 terminal.
+          drive2 = crickit.pwm_out(CPX_DRIVE2)
 
-        # Turn on 50% duty cycle for CPX_DRIVE2
-        drive2.fraction = 0.5
+          # Turn on 50% duty cycle for CPX_DRIVE2
+          drive2.fraction = 0.5
         """
         if terminal not in _PWM_SET:
             raise ValueError(_TERMINALS_NOT_VALID)
@@ -232,12 +231,12 @@ class Crickit:
 
         .. code-block:: python
 
-        from adafruit_crickit.terminals import TOUCH1
-        from adafruit_crickit.crickit import crickit
+          from adafruit_crickit.terminals import TOUCH1
+          from adafruit_crickit.crickit import crickit
 
-        touch1 = crickit.touch(TOUCH1)
-        if touch1.value:
-            print("Touch 1 touched")
+          touch1 = crickit.touch(TOUCH1)
+          if touch1.value:
+              print("Touch 1 touched")
         """
         if terminal not in _TOUCH_SET:
             raise ValueError(_TERMINALS_NOT_VALID)
@@ -247,21 +246,23 @@ class Crickit:
         """Create a seesaw.NeoPixel object for the given terminal.
 
         .. note:: On the CPX Crickit board, the NeoPixel terminal is by default
-        controlled by CPX pin A1, and is not controlled by seesaw. So this object
-        will not be usable. Instead, use the regular NeoPixel library
-        and specify `board.A1` as the pin.
+          controlled by CPX pin A1, and is not controlled by seesaw. So this object
+          will not be usable. Instead, use the regular NeoPixel library
+          and specify ``board.A1`` as the pin.
 
         You can change the jumper connection on the bottom of the CPX Crickit board
         to move control of the NeoPixel terminal to seesaw pin #20 (terminal.NEOPIXEL).
         In addition, the Crickit FeatherWing always uses seesaw pin #20.
         In either of those cases, this object will work.
 
-        from adafruit_crickit.terminals import NEOPIXEL
-        from adafruit_crickit.crickit import crickit
+        .. code-block:: python
 
-        neopixels = crickit.neopixel(NEOPIXEL, 24)
+          from adafruit_crickit.terminals import NEOPIXEL
+          from adafruit_crickit.crickit import crickit
 
-        neopixels.fill((100, 0, 0))
+          neopixels = crickit.neopixel(NEOPIXEL, 24)
+
+          neopixels.fill((100, 0, 0))
         """
         from adafruit_seesaw.neopixel import NeoPixel
 

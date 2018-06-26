@@ -16,7 +16,7 @@ extensions = [
     'sphinx.ext.todo',
 ]
 
-# TODO: Please Read!
+
 # Uncomment the below if you use native CircuitPython modules such as
 # digitalio, micropython and busio. List the modules you use. Without it, the
 # autodoc module docs will fail to generate with a warning.
@@ -27,7 +27,7 @@ intersphinx_mapping = {'python': ('https://docs.python.org/3.4', None),
                        'CircuitPython': ('https://circuitpython.readthedocs.io/en/latest/', None)}
 
 # Libraries we depend on but don't need for generating docs.
-autodoc_mock_imports = ["board", "busio", "adafruit_seesaw"]
+autodoc_mock_imports = ["board", "busio", "adafruit_seesaw", "micropython"]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
