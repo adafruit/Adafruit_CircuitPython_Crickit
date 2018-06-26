@@ -20,8 +20,8 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 """
-`adafruit_crickit`
-====================================================
+`adafruit_crickit.crickit`
+==========================
 
 Convenience library for using the Adafruit Crickit robotics boards.
 
