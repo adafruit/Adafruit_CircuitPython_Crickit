@@ -3,10 +3,13 @@
 # crickit is a singleton object
 from adafruit_crickit.crickit import crickit
 
-# Terminals have simple names like SIGNAL1, SERVO2, TOUCH3, MOTOR1A, NEOPIXEL, CPX_DRIVE1, FEATHER_DRIVE2
+# Terminals have simple names like SIGNAL1, SERVO2, TOUCH3, MOTOR1A, NEOPIXEL,
+# CPX_DRIVE1, and FEATHER_DRIVE2.
 # Because the Drive terminals are numbered in reverse on the CPX Crickit vs the FeatherWing Crickit,
 # there are separate DRIVE names for CPX and FeatherWing Drive terminals.
-from adafruit_crickit.terminals import *
+from adafruit_crickit.terminals import (SERVO1,
+                                        MOTOR1A, MOTOR1B, MOTOR2A, MOTOR2B,
+                                        CPX_DRIVE1, NEOPIXEL, SIGNAL1, SIGNAL2, TOUCH1)
 
 # Add this import if using stepper motors.
 # It will expose constants saying how to step: stepper.FORWARD, stepper.BACKWARD, etc.
