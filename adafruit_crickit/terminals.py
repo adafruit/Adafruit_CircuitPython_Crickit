@@ -52,13 +52,13 @@ SIGNAL8 = const(8)
 
 _SIGNAL_SET = set((SIGNAL1, SIGNAL2, SIGNAL3, SIGNAL4, SIGNAL5, SIGNAL6, SIGNAL7, SIGNAL8))
 
-SERVO1 = const(14)
+SERVO1 = const(17)
 """Servo 1 terminal"""
-SERVO2 = const(15)
+SERVO2 = const(16)
 """Servo 2 terminal"""
-SERVO3 = const(16)
+SERVO3 = const(15)
 """Servo 3 terminal"""
-SERVO4 = const(17)
+SERVO4 = const(14)
 """Servo 4 terminal"""
 
 _SERVO_SET = set((SERVO1, SERVO2, SERVO3, SERVO4))
@@ -76,7 +76,7 @@ _MOTOR1_SET = set((MOTOR1A, MOTOR1B))
 _MOTOR2_SET = set((MOTOR2A, MOTOR2B))
 _MOTOR_SET = _MOTOR1_SET | _MOTOR2_SET
 
-#  Drive terminals numbers on the FeatherWing Crickit. are the reverse of those on the CPX Crickit.
+#  Drive terminal numbers on the FeatherWing Crickit are the reverse of those on the CPX Crickit.
 
 CPX_DRIVE1 = const(42)
 """Drive 1 terminal on CPX Crickit (CPX and FeatherWing are different)"""
