@@ -107,7 +107,7 @@ class Crickit:
 
         return self._seesaw
 
-    def servo(self, terminal, *, actuation_range=180, min_pulse=1000, max_pulse=2000):
+    def servo(self, terminal, *, actuation_range=180, min_pulse=550, max_pulse=2400):
         """Create an adafruit_motor.servo.Servo.
 
         .. code-block:: python
@@ -128,7 +128,7 @@ class Crickit:
         pwm.frequency = 50
         return Servo(pwm, actuation_range=actuation_range, min_pulse=min_pulse, max_pulse=max_pulse)
 
-    def continuous_servo(self, terminal, *, min_pulse=1000, max_pulse=2000):
+    def continuous_servo(self, terminal, *, min_pulse=550, max_pulse=2400):
         """Create an adafruit_motor.servo.ContinuousServo.
 
         .. code-block:: python
