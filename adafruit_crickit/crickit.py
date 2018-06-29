@@ -107,17 +107,42 @@ class Crickit:
 
         return self._seesaw
 
-    def servo(self, terminal, *, actuation_range=180, min_pulse=550, max_pulse=2400):
-        """Create an adafruit_motor.servo.Servo.
+    def servo(self, terminal, *, actuation_range=180, min_pulse=750, max_pulse=2250):
+        """Create an ``adafruit_motor.servo.Servo object``.
+
+       :param terminal
+       :param int actuation_range: The physical range of motion of the servo in degrees, \
+           for the given ``min_pulse`` and ``max_pulse`` values.
+       :param int min_pulse: The minimum pulse width of the servo in microseconds.
+       :param int max_pulse: The maximum pulse width of the servo in microseconds.
+
+       The specified pulse width range of a servo has historically been 1000-2000us,
+       for a 90 degree range of motion. But nearly all modern servos have a 170-180
+       degree range, and the pulse widths can go well out of the range to achieve this
+       extended motion. The default values here of ``750`` and ``2250`` typically give
+       135 degrees of motion. You can set ``actuation_range`` to correspond to the
+       actual range of motion you observe with your given ``min_pulse`` and ``max_pulse``
+       values.
+
+       .. warning:: You can extend the pulse width above and below these limits to
+         get a wider range of movement. But if you go too low or too high,
+         the servo mechanism may hit the end stops, buzz, and draw extra current as it stalls.
+         Test carefully to find the safe minimum and maximum.
 
         .. code-block:: python
 
+          import time
           from adafruit_crickit.terminals import SERVO1
           from adafruit_crickit.crickit import crickit
 
           servo1 = crickit.servo(SERVO1)
           # Set to 90 degrees.
           servo1.angle = 90
+
+          # Set all the way one way, then the other.
+          servo1.fraction = 0.0
+          time.sleep(1.0)
+          servo.fraction  = 1.0
         """
         if terminal not in _PWM_SET:
             raise ValueError(_TERMINALS_NOT_VALID)
@@ -128,8 +153,8 @@ class Crickit:
         pwm.frequency = 50
         return Servo(pwm, actuation_range=actuation_range, min_pulse=min_pulse, max_pulse=max_pulse)
 
-    def continuous_servo(self, terminal, *, min_pulse=550, max_pulse=2400):
-        """Create an adafruit_motor.servo.ContinuousServo.
+    def continuous_servo(self, terminal, *, min_pulse=750, max_pulse=2250):
+        """Create an ``adafruit_motor.servo.ContinuousServo`` object
 
         .. code-block:: python
 
@@ -150,7 +175,7 @@ class Crickit:
         return ContinuousServo(pwm, min_pulse=min_pulse, max_pulse=max_pulse)
 
     def dc_motor(self, terminal1, terminal2):
-        """Create an adafruit_motor.motor.DCMotor.
+        """Create an ``adafruit_motor.motor.DCMotor`` object.
 
         .. code-block:: python
 
@@ -177,7 +202,7 @@ class Crickit:
                        PWMOut(self._seesaw, terminal2))
 
     def stepper_motor(self, terminal1, terminal2, terminal3, terminal4):
-        """Createn an adafruit_motor.motor.StepperMotor.
+        """Create an ``adafruit_motor.motor.StepperMotor`` object.
         The four Motor or four Drive terminals are used all together
         to drive a single StepperMotor.
 
@@ -201,7 +226,7 @@ class Crickit:
         return StepperMotor(*(PWMOut(self._seesaw, terminal) for terminal in terminals))
 
     def pwm_out(self, terminal, duty_cycle=0, frequency=1000):
-        """adafruit_motor.servo.Servo objects for the Servo terminals 1 through 4.
+        """Create an ``adafruit_seesaw.pwmout.PWMOut`` object.
 
         Note that the default ``frequency`` is 1000, not 500, which is the default
         for `pulseio.PWMOut`. 1000 is a better default for the Drive terminals.
@@ -226,8 +251,8 @@ class Crickit:
         return pwm
 
     def touch(self, terminal):
-        """CrickitTouchIn objects for the four Capacitive Touch terminals
-        and Signal terminals that have touch capability (SIGNAL1 through SIGNAL4).
+        """Create a `CrickitTouchIn` object. Used for the four Capacitive Touch terminals
+        and also for Signal terminals that have touch capability (`SIGNAL1` through `SIGNAL4`).
 
         .. code-block:: python
 
