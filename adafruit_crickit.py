@@ -70,10 +70,10 @@ _MOTOR1 = (22, 23)
 _MOTOR2 = (19, 18)
 _MOTOR_ALL = _MOTOR1 + _MOTOR2
 
-_DRIVE1 = const(42)
-_DRIVE2 = const(43)
-_DRIVE3 = const(12)
-_DRIVE4 = const(13)
+_DRIVE1 = const(13)
+_DRIVE2 = const(12)
+_DRIVE3 = const(43)
+_DRIVE4 = const(42)
 
 _DRIVE_ALL = (_DRIVE1, _DRIVE2, _DRIVE3, _DRIVE4)
 
