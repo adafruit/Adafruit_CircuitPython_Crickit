@@ -48,15 +48,16 @@ import busio
 
 #pylint: disable=wrong-import-position
 sys.path.insert(0, ".frozen")   # Prefer frozen modules over local.
-from adafruit_crickit.terminals import (NEOPIXEL, _SIGNAL_SET,
-                                        _MOTOR1_SET, _MOTOR2_SET, _MOTOR_SET,
-                                        _DRIVE_SET, _PWM_SET, _TOUCH_SET)
 
 from adafruit_seesaw.seesaw import Seesaw
 # This is very common so import it in advance.
 # Takes less memory to import PWMOut once than have multiple import statements.
 # Each import statement is about 60 bytes.
 from adafruit_seesaw.pwmout import PWMOut
+
+from adafruit_crickit.terminals import (NEOPIXEL, _SIGNAL_SET,
+                                        _MOTOR1_SET, _MOTOR2_SET, _MOTOR_SET,
+                                        _DRIVE_SET, _PWM_SET, _TOUCH_SET)
 
 __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_Crickit.git"
