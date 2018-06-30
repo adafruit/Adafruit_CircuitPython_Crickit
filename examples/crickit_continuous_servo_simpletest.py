@@ -1,9 +1,6 @@
 # Crickit library demo - Continuous servo
 
-from adafruit_crickit.terminals import SERVO1
-from adafruit_crickit.crickit import crickit
+from adafruit_crickit import crickit
 
-cservo1 = crickit.continuous_servo(SERVO1)
-
-# Start spinning backwards at half speed.
-cservo1.throttle = -0.5
+# Start spinning continuous servo on Servo 1 terminal backwards at half speed.
+crickit.continuous_servo_1.throttle = -0.5

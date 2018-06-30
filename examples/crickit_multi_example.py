@@ -1,50 +1,42 @@
 # This is a mock example showing typical usage of the library for each kind of device.
 
-# crickit is a singleton object
-from adafruit_crickit.crickit import crickit
-
-# Terminals have simple names like SIGNAL1, SERVO2, TOUCH3, MOTOR1A, NEOPIXEL,
-# CPX_DRIVE1, and FEATHER_DRIVE2.
-# Because the Drive terminals are numbered in reverse on the CPX Crickit vs the FeatherWing Crickit,
-# there are separate DRIVE names for CPX and FeatherWing Drive terminals.
-from adafruit_crickit.terminals import (SERVO1,
-                                        MOTOR1A, MOTOR1B, MOTOR2A, MOTOR2B,
-                                        CPX_DRIVE1, NEOPIXEL, SIGNAL1, SIGNAL2, TOUCH1)
+from adafruit_crickit import crickit
 
 # Add this import if using stepper motors.
 # It will expose constants saying how to step: stepper.FORWARD, stepper.BACKWARD, etc.
 from adafruit_motor import stepper
 
-servo1 = crickit.servo(SERVO1)
-servo1.angle = 90
+# Set servo 1 to 90 degrees
+crickit.servo_1.angle = 90
 
-cservo1 = crickit.continuous_servo(SERVO1)
-cservo1.throttle = -0.5
+# Change servo settings.
+crickit.servo_1.actuation_range = 135
+crickit.servo_1.set_pulse_widths(min_pulse=850, max_pulse=2100)
 
-motor = crickit.dc_motor(MOTOR1A, MOTOR1B)
-motor.throttle = 0.5
+# You can assign a device to a variable to get a shorter name.
+servo_2 = crickit.servo_2
+servo_2.throttle = 0
 
-drive1 = crickit.pwm_out(CPX_DRIVE1)
-drive1.fraction = 1.0
+# Run a continous servo on Servo 2 backwards at half speed.
+crickit.continuous_servo_2.throttle = -0.5
 
-# Note: On CPX Crickit, NeoPixel pin is normally connected to A1, not to seesaw,
-# so this demo would not control the NeoPixel terminal.
+# Run the motor on Motor 1 terminals at half speed.
+crickit.dc_motor_1.throttle = 0.5
 
-# Strip or ring of 8 NeoPixels
-neopixels = crickit.neopixel(NEOPIXEL, 8)
-neopixels.fill((100, 100, 100))
+# Set Drive 1 terminal to 3/4 strength.
+crickit.drive_1.fraction = 0.75
 
-# Write Signal terminal 1 and read Signal terminal 2.
-ss = crickit.seesaw
-ss.pin_mode(SIGNAL1, ss.OUTPUT)
-ss.pin_mode(SIGNAL2, ss.INPUT)
-ss.digital_write(SIGNAL1, True)
-print(ss.digital_read(SIGNAL2))
+if crickit.touch_1.value:
+    print("Touched terminal Touch 1")
 
 # A single stepper motor uses up all the motor terminals.
-stepper_motor = crickit.stepper_motor(MOTOR1A, MOTOR1B, MOTOR2A, MOTOR2B)
-stepper_motor.onestep(direction=stepper.FORWARD)
+crickit.stepper_motor.onestep(direction=stepper.FORWARD)
 
-touch1 = crickit.touch(TOUCH1)
-if touch1.value:
-    print("Touched terminal Touch 1")
+# You can also use the Drive terminals for a stepper motor
+crickit.drive_stepper_motor.onestep(direction=stepper.BACKWARD)
+
+# Note: On CPX Crickit, NeoPixel pin is normally connected to A1, not to seesaw,
+# so this part of the demo cannot control the NeoPixel terminal.
+# Strip or ring of 8 NeoPixels
+crickit.init_neopixel(8)
+crickit.neopixel.fill((100, 100, 100))
