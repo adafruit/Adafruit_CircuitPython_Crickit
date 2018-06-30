@@ -302,7 +302,7 @@ class Crickit:
         """Reset the whole Crickit board."""
         self._seesaw.sw_reset()
 
-crickit = None
+crickit = None # pylint: disable=invalid-name
 """A singleton instance to control a single Crickit board, controlled by the default I2C pins."""
 
 # Sphinx's board is missing real pins so skip the constructor in that case.
