@@ -1,13 +1,11 @@
 # Crickit library demo - DC motor
 
 import time
-from adafruit_crickit.terminals import MOTOR1A, MOTOR1B
-from adafruit_crickit.crickit import crickit
+from adafruit_crickit import crickit
 
-motor = crickit.dc_motor(MOTOR1A, MOTOR1B)
-# Run motor forward at full speed and then backward at half speed.
+# Run motor on Motor 1 terminals forward at full speed and then backward at half speed.
 while True:
-    motor.throttle = 1.0
+    crickit.dc_motor_1.throttle = 1.0
     time.sleep(1)
-    motor.throttle = -0.5
+    crickit.dc_motor_1.throttle = -0.5
     time.sleep(1)

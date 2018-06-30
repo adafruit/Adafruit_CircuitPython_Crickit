@@ -20,7 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 """
-`adafruit_crickit.crickit`
+`adafruit_crickit`
 ==========================
 
 Convenience library for using the Adafruit Crickit robotics boards.
@@ -51,8 +51,7 @@ from micropython import const
 #pylint: disable=wrong-import-position
 sys.path.insert(0, ".frozen")   # Prefer frozen modules over local.
 
-from adafruit_seesaw.seesaw import Seesaw
-from adafruit_seesaw.pwmout import PWMOut
+from adafruit_seesaw.seesaw import Seesaw, PWMOut
 from adafruit_motor.servo import Servo, ContinuousServo
 from adafruit_motor.motor import DCMotor
 from adafruit_motor.stepper import StepperMotor
@@ -60,22 +59,6 @@ from adafruit_motor.stepper import StepperMotor
 __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_Crickit.git"
 
-SIGNAL1 = const(2)
-"""Signal 1 terminal"""
-SIGNAL2 = const(3)
-"""Signal 2 terminal"""
-SIGNAL3 = const(40)
-"""Signal 3 terminal"""
-SIGNAL4 = const(41)
-"""Signal 4 terminal"""
-SIGNAL5 = const(11)
-"""Signal 5 terminal"""
-SIGNAL6 = const(10)
-"""Signal 6 terminal"""
-SIGNAL7 = const(9)
-"""Signal 7 terminal"""
-SIGNAL8 = const(8)
-"""Signal 8 terminal"""
 
 _SERVO1 = const(17)
 _SERVO2 = const(16)
@@ -84,16 +67,14 @@ _SERVO4 = const(14)
 
 _MOTOR1 = (22, 23)
 _MOTOR2 = (19, 18)
-_MOTOR = _MOTOR1 + _MOTOR2
+_MOTOR_ALL = _MOTOR1 + _MOTOR2
 
 _DRIVE1 = const(42)
 _DRIVE2 = const(43)
 _DRIVE3 = const(12)
 _DRIVE4 = const(13)
 
-_DRIVE_SET = (_DRIVE1, _DRIVE2, _DRIVE3, _DRIVE4)
-
-_PWM_SET = _MOTOR_SET | _SERVO_SET | _DRIVE_SET
+_DRIVE_ALL = (_DRIVE1, _DRIVE2, _DRIVE3, _DRIVE4)
 
 _TOUCH1 = const(4)
 _TOUCH2 = const(5)
@@ -121,13 +102,56 @@ class CrickitTouchIn:
         return self.raw_value > self.threshold
 
 
+#pylint: disable=too-many-public-methods
 class Crickit:
-    """Represents a Crickit board."""
+    """Represents a Crickit board. Provides a number of devices available via properties, such as
+    ``servo_1``. Devices are created on demand the first time they are referenced.
+
+    It's fine to refer a device multiple times via its property, but it's faster and results
+    in more compact code to assign a device to a variable.
+
+    .. code-block:: python
+
+      import time
+      from adafruit_crickit import crickit
+
+      # This is fine:
+      crickit.servo_1.angle = 0
+      time.sleep(1)
+      crickit.servo_1.angle = 90
+      time.sleep(1)
+
+      # This is slightly faster and more compact:
+      servo_1 = crickit.servo_1
+      servo_1.angle = 0
+      time.sleep(1)
+      servo_1.angle = 90
+      time.sleep(1)
+    """
+
+    SIGNAL1 = 2
+    """Signal 1 terminal"""
+    SIGNAL2 = 3
+    """Signal 2 terminal"""
+    SIGNAL3 = 40
+    """Signal 3 terminal"""
+    SIGNAL4 = 41
+    """Signal 4 terminal"""
+    SIGNAL5 = 11
+    """Signal 5 terminal"""
+    SIGNAL6 = 10
+    """Signal 6 terminal"""
+    SIGNAL7 = 9
+    """Signal 7 terminal"""
+    SIGNAL8 = 8
+    """Signal 8 terminal"""
+
     def __init__(self, seesaw):
         self._seesaw = seesaw
         # Associate terminal(s) with certain devices.
         # Used to find existing devices.
         self._devices = dict()
+        self._neopixel = None
 
     @property
     def seesaw(self):
@@ -148,42 +172,42 @@ class Crickit:
     @property
     def servo_1(self):
         """``adafruit_motor.servo.Servo`` object on Servo 1 terminal"""
-        return self._servo(_SERVO1)
+        return self._servo(_SERVO1, Servo)
 
     @property
     def servo_2(self):
         """``adafruit_motor.servo.Servo`` object on Servo 2 terminal"""
-        return self._servo(_SERVO2)
+        return self._servo(_SERVO2, Servo)
 
     @property
     def servo_3(self):
         """``adafruit_motor.servo.Servo`` object on Servo 3 terminal"""
-        return self._servo(_SERVO3)
+        return self._servo(_SERVO3, Servo)
 
     @property
     def servo_4(self):
         """``adafruit_motor.servo.Servo`` object on Servo 4 terminal"""
-        return self._servo(_SERVO4)
+        return self._servo(_SERVO4, Servo)
 
     @property
-    def continous_servo_1(self):
-        """``adafruit_motor.servo.Continous_Servo`` object on Servo 1 terminal"""
-        return self._servo(_SERVO1, Continous_Servo)
+    def continuous_servo_1(self):
+        """``adafruit_motor.servo.ContinuousServo`` object on Servo 1 terminal"""
+        return self._servo(_SERVO1, ContinuousServo)
 
     @property
-    def continous_servo_2(self):
-        """``adafruit_motor.servo.Continous_Servo`` object on Servo 2 terminal"""
-        return self._servo(_SERVO2, Continous_Servo)
+    def continuous_servo_2(self):
+        """``adafruit_motor.servo.ContinuousServo`` object on Servo 2 terminal"""
+        return self._servo(_SERVO2, ContinuousServo)
 
     @property
     def continuous_servo_3(self):
-        """``adafruit_motor.servo.Continuous_Servo`` object on Servo 3 terminal"""
-        return self._servo(_SERVO3, Continuous_Servo)
+        """``adafruit_motor.servo.ContinuousServo`` object on Servo 3 terminal"""
+        return self._servo(_SERVO3, ContinuousServo)
 
     @property
     def continuous_servo_4(self):
-        """``adafruit_motor.servo.Continuous_Servo`` object on Servo 4 terminal"""
-        return self._servo(_SERVO4, Continuous_Servo)
+        """``adafruit_motor.servo.ContinuousServo`` object on Servo 4 terminal"""
+        return self._servo(_SERVO4, ContinuousServo)
 
     def _servo(self, terminal, servo_class):
         device = self._devices.get(terminal, None)
@@ -195,56 +219,56 @@ class Crickit:
         return device
 
     @property
-    def motor_1(self):
+    def dc_motor_1(self):
         """``adafruit_motor.motor.DCMotor`` object on Motor 1 terminals"""
         return self._motor(_MOTOR1, DCMotor)
 
     @property
-    def motor_2(self):
+    def dc_motor_2(self):
         """``adafruit_motor.motor.DCMotor`` object on Motor 2 terminals"""
         return self._motor(_MOTOR2, DCMotor)
 
     @property
     def stepper_motor(self):
         """``adafruit_motor.motor.StepperMotor`` object on Motor 1 and Motor 2 terminals"""
-        return self._stepper_motor(_MOTOR_ALL, StepperMotor)
+        return self._motor(_MOTOR_ALL, StepperMotor)
 
     @property
     def drive_stepper_motor(self):
         """``adafruit_motor.motor.StepperMotor`` object on Drive terminals"""
-        return self._stepper_motor(_DRIVE_ALL, StepperMotor)
+        return self._motor(_DRIVE_ALL, StepperMotor)
 
     @property
     def feather_drive_stepper_motor(self):
         """``adafruit_motor.motor.StepperMotor`` object on Drive terminals on Crickit FeatherWing"""
-        return self._stepper_motor(reversed(_DRIVE_ALL), StepperMotor)
+        return self._motor(reversed(_DRIVE_ALL), StepperMotor)
 
     def _motor(self, terminals, motor_class):
         device = self._devices.get(terminals, None)
         if not isinstance(device, motor_class):
             device = motor_class(*(PWMOut(self._seesaw, terminal) for terminal in terminals))
-            self._devices[terminal] = device
+            self._devices[terminals] = device
         return device
 
     @property
     def drive_1(self):
         """``adafruit_seesaw.pwmout.PWMOut`` object on Drive 1 terminal, with ``frequency=1000``"""
-        return _drive(_DRIVE1)
+        return self._drive(_DRIVE1)
 
     @property
     def drive_2(self):
         """``adafruit_seesaw.pwmout.PWMOut`` object on Drive 2 terminal, with ``frequency=1000``"""
-        return _drive(_DRIVE2)
+        return self._drive(_DRIVE2)
 
     @property
     def drive_3(self):
         """``adafruit_seesaw.pwmout.PWMOut`` object on Drive 3 terminal, with ``frequency=1000``"""
-        return _drive(_DRIVE3)
+        return self._drive(_DRIVE3)
 
     @property
     def drive_4(self):
         """``adafruit_seesaw.pwmout.PWMOut`` object on Drive 4 terminal, with ``frequency=1000``"""
-        return _drive(_DRIVE4)
+        return self._drive(_DRIVE4)
 
     feather_drive_1 = drive_4
     """``adafruit_seesaw.pwmout.PWMOut`` object on Crickit Featherwing Drive 1 terminal,
@@ -264,7 +288,7 @@ class Crickit:
     """
 
     def _drive(self, terminal):
-        device = self._devices.get(terminals, None)
+        device = self._devices.get(terminal, None)
         if not isinstance(device, PWMOut):
             device = PWMOut(self._seesaw, terminal)
             device.frequency = 1000
@@ -274,25 +298,25 @@ class Crickit:
     @property
     def touch_1(self):
         """``adafruit_crickit.CrickitTouchIn`` object on Touch 1 terminal"""
-        return _touch(_TOUCH1)
+        return self._touch(_TOUCH1)
 
     @property
     def touch_2(self):
         """``adafruit_crickit.CrickitTouchIn`` object on Touch 2 terminal"""
-        return _touch(_TOUCH2)
+        return self._touch(_TOUCH2)
 
     @property
     def touch_3(self):
         """``adafruit_crickit.CrickitTouchIn`` object on Touch 3 terminal"""
-        return _touch(_TOUCH3)
+        return self._touch(_TOUCH3)
 
     @property
     def touch_4(self):
         """``adafruit_crickit.CrickitTouchIn`` object on Touch 4 terminal"""
-        return _touch(_TOUCH4)
+        return self._touch(_TOUCH4)
 
     def _touch(self, terminal):
-        touch_in = self._devices.get(terminals, None)
+        touch_in = self._devices.get(terminal, None)
         if not touch_in:
             touch_in = CrickitTouchIn(self._seesaw, terminal)
             self._devices[terminal] = touch_in
@@ -301,7 +325,7 @@ class Crickit:
     @property
     def neopixel(self):
         """```adafruit_seesaw.neopixel`` object on NeoPixel terminal.
-        Raises ValueError if `init_neopixel` has not been called.
+        Raises ValueError if ``init_neopixel`` has not been called.
         """
         if not self._neopixel:
             raise ValueError("Call init_neopixel first")

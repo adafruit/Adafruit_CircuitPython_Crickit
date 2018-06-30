@@ -13,21 +13,21 @@ crickit.servo_1.angle = 90
 crickit.servo_1.actuation_range = 135
 crickit.servo_1.set_pulse_widths(min_pulse=850, max_pulse=2100)
 
+# You can assign a device to a variable to get a shorter name.
+servo_2 = crickit.servo_2
+servo_2.throttle = 0
+
 # Run a continous servo on Servo 2 backwards at half speed.
 crickit.continuous_servo_2.throttle = -0.5
 
 # Run the motor on Motor 1 terminals at half speed.
-crickit.motor_1.throttle = 0.5
+crickit.dc_motor_1.throttle = 0.5
 
 # Set Drive 1 terminal to 3/4 strength.
 crickit.drive_1.fraction = 0.75
 
 if crickit.touch_1.value:
     print("Touched terminal Touch 1")
-
-# You can assign a device to a variable to get shorter name.
-cs2 = crickit.continuous_servo_2
-cs2.throttle = 0
 
 # A single stepper motor uses up all the motor terminals.
 crickit.stepper_motor.onestep(direction=stepper.FORWARD)
