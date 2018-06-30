@@ -51,7 +51,8 @@ from micropython import const
 #pylint: disable=wrong-import-position
 sys.path.insert(0, ".frozen")   # Prefer frozen modules over local.
 
-from adafruit_seesaw.seesaw import Seesaw, PWMOut
+from adafruit_seesaw.seesaw import Seesaw
+from adafruit_seesaw.pwmout import PWMOut
 from adafruit_motor.servo import Servo, ContinuousServo
 from adafruit_motor.motor import DCMotor
 from adafruit_motor.stepper import StepperMotor
