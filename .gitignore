@@ -6,3 +6,7 @@ _build
 build*
 bundles
 *~
+.eggs
+*.egg-info
+dist
+
