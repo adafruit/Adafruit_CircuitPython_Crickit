@@ -302,5 +302,9 @@ class Crickit:
         """Reset the whole Crickit board."""
         self._seesaw.sw_reset()
 
-crickit = Crickit(Seesaw(busio.I2C(board.SCL, board.SDA))) # pylint: disable=invalid-name
+crickit = None
 """A singleton instance to control a single Crickit board, controlled by the default I2C pins."""
+
+# Sphinx's board is missing real pins so skip the constructor in that case.
+if "SCL" in dir(board):
+    crickit = Crickit(Seesaw(busio.I2C(board.SCL, board.SDA))) # pylint: disable=invalid-name
