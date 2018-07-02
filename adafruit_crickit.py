@@ -354,9 +354,9 @@ class Crickit:
           crickit.neopixel.fill((100, 0, 0))
         """
         from adafruit_seesaw.neopixel import NeoPixel
-        return NeoPixel(self._seesaw, _NEOPIXEL, n, bpp=bpp,
-                        brightness=brightness, auto_write=auto_write,
-                        pixel_order=pixel_order)
+        self._neopixel = NeoPixel(self._seesaw, _NEOPIXEL, n, bpp=bpp,
+                                  brightness=brightness, auto_write=auto_write,
+                                  pixel_order=pixel_order)
 
     def reset(self):
         """Reset the whole Crickit board."""
