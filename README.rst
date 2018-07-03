@@ -48,7 +48,7 @@ In most cases you just need a couple of imports.
 
   # Change servo settings.
   crickit.servo_1.actuation_range = 135
-  crickit.servo_1.set_pulse_widths(min_pulse=850, max_pulse=2100)
+  crickit.servo_1.set_pulse_width_range(min_pulse=850, max_pulse=2100)
 
   # You can assign a device to a variable to get a shorter name.
   servo_2 = crickit.servo_2
