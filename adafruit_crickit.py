@@ -68,14 +68,17 @@ _SERVO4 = const(14)
 
 _MOTOR1 = (22, 23)
 _MOTOR2 = (19, 18)
-_MOTOR_ALL = _MOTOR1 + _MOTOR2
+# Order as needed for steppers.
+_MOTOR_STEPPER = _MOTOR1 + _MOTOR2
 
 _DRIVE1 = const(13)
 _DRIVE2 = const(12)
 _DRIVE3 = const(43)
 _DRIVE4 = const(42)
 
-_DRIVE_ALL = (_DRIVE1, _DRIVE2, _DRIVE3, _DRIVE4)
+# Order as needed for steppers.
+_DRIVE_STEPPER = (_DRIVE1, _DRIVE3, _DRIVE2, _DRIVE4)
+
 
 _TOUCH1 = const(4)
 _TOUCH2 = const(5)
@@ -232,17 +235,17 @@ class Crickit:
     @property
     def stepper_motor(self):
         """``adafruit_motor.motor.StepperMotor`` object on Motor 1 and Motor 2 terminals"""
-        return self._motor(_MOTOR_ALL, StepperMotor)
+        return self._motor(_MOTOR_STEPPER, StepperMotor)
 
     @property
     def drive_stepper_motor(self):
         """``adafruit_motor.motor.StepperMotor`` object on Drive terminals"""
-        return self._motor(_DRIVE_ALL, StepperMotor)
+        return self._motor(_DRIVE_STEPPER, StepperMotor)
 
     @property
     def feather_drive_stepper_motor(self):
         """``adafruit_motor.motor.StepperMotor`` object on Drive terminals on Crickit FeatherWing"""
-        return self._motor(reversed(_DRIVE_ALL), StepperMotor)
+        return self._motor(reversed(_DRIVE_STEPPER), StepperMotor)
 
     def _motor(self, terminals, motor_class):
         device = self._devices.get(terminals, None)
