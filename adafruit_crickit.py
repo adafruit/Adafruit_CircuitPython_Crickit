@@ -245,7 +245,7 @@ class Crickit:
     @property
     def feather_drive_stepper_motor(self):
         """``adafruit_motor.motor.StepperMotor`` object on Drive terminals on Crickit FeatherWing"""
-        return self._motor(reversed(_DRIVE_STEPPER), StepperMotor)
+        return self._motor(tuple(reversed(_DRIVE_STEPPER)), StepperMotor)
 
     def _motor(self, terminals, motor_class):
         device = self._devices.get(terminals, None)
