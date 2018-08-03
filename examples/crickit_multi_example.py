@@ -1,10 +1,10 @@
 # This is a mock example showing typical usage of the library for each kind of device.
 
-from adafruit_crickit import crickit
-
 # Add this import if using stepper motors.
 # It will expose constants saying how to step: stepper.FORWARD, stepper.BACKWARD, etc.
 from adafruit_motor import stepper
+
+from adafruit_crickit import crickit
 
 # Set servo 1 to 90 degrees
 crickit.servo_1.angle = 90
