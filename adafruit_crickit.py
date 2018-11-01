@@ -49,7 +49,14 @@ import busio
 from micropython import const
 
 #pylint: disable=wrong-import-position
-sys.path.insert(0, ".frozen")   # Prefer frozen modules over local.
+try:
+    lib_index = sys.path.index("/lib")        # pylint: disable=invalid-name
+    if lib_index < sys.path.index(".frozen"):
+        # Prefer frozen modules over those in /lib.
+        sys.path.insert(lib_index, ".frozen")
+except ValueError:
+    # Don't change sys.path if it doesn't contain "lib" or ".frozen".
+    pass
 
 from adafruit_seesaw.seesaw import Seesaw
 from adafruit_seesaw.pwmout import PWMOut
