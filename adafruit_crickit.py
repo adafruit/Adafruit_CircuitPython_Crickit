@@ -59,6 +59,7 @@ except ValueError:
     pass
 
 from adafruit_seesaw.seesaw import Seesaw
+from adafruit_seesaw.crickit import Crickit_Pinmap
 from adafruit_seesaw.pwmout import PWMOut
 from adafruit_motor.servo import Servo, ContinuousServo
 from adafruit_motor.motor import DCMotor
@@ -159,6 +160,7 @@ class Crickit:
 
     def __init__(self, seesaw):
         self._seesaw = seesaw
+        self._seesaw.pin_mapping = Crickit_Pinmap
         # Associate terminal(s) with certain devices.
         # Used to find existing devices.
         self._devices = dict()
