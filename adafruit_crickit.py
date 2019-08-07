@@ -44,7 +44,6 @@ Implementation Notes
 import sys
 
 import board
-import busio
 
 from micropython import const
 
