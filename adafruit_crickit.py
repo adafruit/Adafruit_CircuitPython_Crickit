@@ -378,5 +378,5 @@ crickit = None # pylint: disable=invalid-name
 """A singleton instance to control a single Crickit board, controlled by the default I2C pins."""
 
 # Sphinx's board is missing real pins so skip the constructor in that case.
-if "SCL" in dir(board):
-    crickit = Crickit(Seesaw(busio.I2C(board.SCL, board.SDA))) # pylint: disable=invalid-name
+if "I2C" in dir(board):
+    crickit = Crickit(Seesaw(board.I2C())) # pylint: disable=invalid-name
