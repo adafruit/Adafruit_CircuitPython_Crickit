@@ -377,7 +377,7 @@ class Crickit:
         Raises ValueError if ``init_onboard_pixel`` has not been called.
         """
         if not self._onboard_pixel:
-            raise ValueError("Call init_neopixel first")
+            raise ValueError("Call init_onboard_pixel first")
         return self._onboard_pixel
 
 
