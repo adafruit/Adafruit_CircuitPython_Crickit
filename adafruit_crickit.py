@@ -373,7 +373,7 @@ class Crickit:
 
     @property
     def onboard_pixel(self):
-        """```adafruit_seesaw.neopixel`` object on Seesaw NeoPixel terminal.
+        """```adafruit_seesaw.neopixel`` object on the Seesaw on-board NeoPixel.
         Raises ValueError if ``init_onboard_pixel`` has not been called.
         """
         if not self._onboard_pixel:
