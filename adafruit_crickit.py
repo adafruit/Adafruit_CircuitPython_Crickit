@@ -93,6 +93,7 @@ _TOUCH3 = const(6)
 _TOUCH4 = const(7)
 
 _NEOPIXEL = const(20)
+_SS_PIXEL = const(27)
 
 #pylint: disable=too-few-public-methods
 class CrickitTouchIn:
@@ -164,6 +165,7 @@ class Crickit:
         # Used to find existing devices.
         self._devices = dict()
         self._neopixel = None
+        self._onboard_pixel = None
 
     @property
     def seesaw(self):
@@ -366,6 +368,31 @@ class Crickit:
         """
         from adafruit_seesaw.neopixel import NeoPixel
         self._neopixel = NeoPixel(self._seesaw, _NEOPIXEL, n, bpp=bpp,
+                                  brightness=brightness, auto_write=auto_write,
+                                  pixel_order=pixel_order)
+
+    @property
+    def onboard_pixel(self):
+        """```adafruit_seesaw.neopixel`` object on Seesaw NeoPixel terminal.
+        Raises ValueError if ``init_onboard_pixel`` has not been called.
+        """
+        if not self._onboard_pixel:
+            raise ValueError("Call init_neopixel first")
+        return self._onboard_pixel
+
+
+    def init_onboard_pixel(self, *, n=1, bpp=3, brightness=1.0, auto_write=True, pixel_order=None):
+        """Set up a seesaw.NeoPixel object for the on-board NeoPixel
+
+        .. code-block:: python
+
+          from adafruit_crickit.crickit import crickit
+
+          crickit.init_onboard_pixel()
+          crickit.onboard_pixel.fill((100, 0, 0))
+        """
+        from adafruit_seesaw.neopixel import NeoPixel
+        self._onboard_pixel = NeoPixel(self._seesaw, _SS_PIXEL, n, bpp=bpp,
                                   brightness=brightness, auto_write=auto_write,
                                   pixel_order=pixel_order)
 
