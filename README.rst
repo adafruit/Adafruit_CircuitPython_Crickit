@@ -58,7 +58,7 @@ Usage Example
 This examples shows how to control all the devices supported by the library.
 In most cases you just need a couple of imports.
 
-.. code-block :: python
+.. code-block:: python
 
   # This is a mock example showing typical usage of the library for each kind of device.
 
