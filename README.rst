@@ -102,7 +102,7 @@ In most cases you just need a couple of imports.
   # Strip or ring of 8 NeoPixels
   crickit.init_neopixel(8)
   crickit.neopixel.fill((100, 100, 100))
-  
+
   # Set the Crickit's on-board NeoPixel to a dim purple.
   crickit.init_onboard_pixel(brightness=0.01)
   crickit.onboard_pixel[0] = ((255, 24, 255))
