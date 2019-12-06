@@ -58,7 +58,7 @@ Usage Example
 This examples shows how to control all the devices supported by the library.
 In most cases you just need a couple of imports.
 
-.. code-block :: python
+.. code-block:: python
 
   # This is a mock example showing typical usage of the library for each kind of device.
 
@@ -103,6 +103,9 @@ In most cases you just need a couple of imports.
   crickit.init_neopixel(8)
   crickit.neopixel.fill((100, 100, 100))
 
+  # Set the Crickit's on-board NeoPixel to a dim purple.
+  crickit.init_onboard_pixel(brightness=0.01)
+  crickit.onboard_pixel[0] = ((255, 24, 255))
 
 Contributing
 ============
