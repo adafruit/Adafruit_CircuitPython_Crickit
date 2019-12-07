@@ -165,9 +165,7 @@ class Crickit:
         # Used to find existing devices.
         self._devices = dict()
         self._neopixel = None
-        # Set initial on-board NeoPixel status and brightness
         self._onboard_pixel = None
-        self.brightness = 1.0
 
     @property
     def seesaw(self):
@@ -381,7 +379,7 @@ class Crickit:
         if not self._onboard_pixel:
             from adafruit_seesaw.neopixel import NeoPixel
             self._onboard_pixel = NeoPixel(self._seesaw, _SS_PIXEL, 1, bpp=3,
-                                           brightness=self.brightness, auto_write=True,
+                                           brightness=1.0, auto_write=True,
                                            pixel_order=None)
             self._onboard_pixel.fill((0, 0, 0))
         return self._onboard_pixel
