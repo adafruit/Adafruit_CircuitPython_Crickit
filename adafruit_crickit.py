@@ -374,7 +374,7 @@ class Crickit:
     @property
     def onboard_pixel(self):
         """```adafruit_seesaw.neopixel`` object on the Seesaw on-board NeoPixel.
-        Initialize on-board NeoPixel upon first use.
+        Initialize on-board NeoPixel and clear upon first use.
         """
         if not self._onboard_pixel:
             from adafruit_seesaw.neopixel import NeoPixel
@@ -382,7 +382,7 @@ class Crickit:
             self._onboard_pixel = NeoPixel(self._seesaw, _SS_PIXEL, 1, bpp=3,
                                            brightness=self.brightness, auto_write=True,
                                            pixel_order=None)
-            self._onboard_pixel.fill((0, 0, 0))  # clear on-board NeoPixel
+            self._onboard_pixel.fill((0, 0, 0))
         return self._onboard_pixel
 
     def reset(self):
