@@ -374,27 +374,16 @@ class Crickit:
     @property
     def onboard_pixel(self):
         """```adafruit_seesaw.neopixel`` object on the Seesaw on-board NeoPixel.
-        Raises ValueError if ``init_onboard_pixel`` has not been called.
+        Initialize on-board NeoPixel upon first use.
         """
         if not self._onboard_pixel:
-            raise ValueError("Call init_onboard_pixel first")
+            from adafruit_seesaw.neopixel import NeoPixel
+            self.brightness = 1.0
+            self._onboard_pixel = NeoPixel(self._seesaw, _SS_PIXEL, 1, bpp=3,
+                                           brightness=self.brightness, auto_write=True,
+                                           pixel_order=None)
+            self._onboard_pixel.fill((0, 0, 0))  # clear on-board NeoPixel
         return self._onboard_pixel
-
-
-    def init_onboard_pixel(self, *, n=1, bpp=3, brightness=1.0, auto_write=True, pixel_order=None):
-        """Set up a seesaw.NeoPixel object for the on-board NeoPixel
-
-        .. code-block:: python
-
-          from adafruit_crickit.crickit import crickit
-
-          crickit.init_onboard_pixel()
-          crickit.onboard_pixel.fill((100, 0, 0))
-        """
-        from adafruit_seesaw.neopixel import NeoPixel
-        self._onboard_pixel = NeoPixel(self._seesaw, _SS_PIXEL, n, bpp=bpp,
-                                       brightness=brightness, auto_write=auto_write,
-                                       pixel_order=pixel_order)
 
     def reset(self):
         """Reset the whole Crickit board."""
