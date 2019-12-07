@@ -93,6 +93,7 @@ _TOUCH3 = const(6)
 _TOUCH4 = const(7)
 
 _NEOPIXEL = const(20)
+_SS_PIXEL = const(27)
 
 #pylint: disable=too-few-public-methods
 class CrickitTouchIn:
@@ -164,6 +165,7 @@ class Crickit:
         # Used to find existing devices.
         self._devices = dict()
         self._neopixel = None
+        self._onboard_pixel = None
 
     @property
     def seesaw(self):
@@ -368,6 +370,19 @@ class Crickit:
         self._neopixel = NeoPixel(self._seesaw, _NEOPIXEL, n, bpp=bpp,
                                   brightness=brightness, auto_write=auto_write,
                                   pixel_order=pixel_order)
+
+    @property
+    def onboard_pixel(self):
+        """```adafruit_seesaw.neopixel`` object on the Seesaw on-board NeoPixel.
+        Initialize on-board NeoPixel and clear upon first use.
+        """
+        if not self._onboard_pixel:
+            from adafruit_seesaw.neopixel import NeoPixel
+            self._onboard_pixel = NeoPixel(self._seesaw, _SS_PIXEL, 1, bpp=3,
+                                           brightness=1.0, auto_write=True,
+                                           pixel_order=None)
+            self._onboard_pixel.fill((0, 0, 0))
+        return self._onboard_pixel
 
     def reset(self):
         """Reset the whole Crickit board."""
