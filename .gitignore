@@ -3,10 +3,8 @@ _build
 *.pyc
 *.mpy
 .env
-build*
 bundles
 *~
 .eggs
 *.egg-info
 dist
-

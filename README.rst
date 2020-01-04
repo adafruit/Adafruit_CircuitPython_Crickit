@@ -9,8 +9,8 @@ Introduction
     :target: https://discord.gg/nBQh6qu
     :alt: Discord
 
-.. image:: https://travis-ci.com/adafruit/Adafruit_CircuitPython_Crickit.svg?branch=master
-    :target: https://travis-ci.com/adafruit/Adafruit_CircuitPython_Crickit
+.. image:: https://github.com/adafruit/Adafruit_CircuitPython_Crickit/workflows/Build%20CI/badge.svg
+    :target: https://github.com/adafruit/Adafruit_CircuitPython_Crickit/actions/
     :alt: Build Status
 
 This convenience library makes coding for the Crickit robotics boards simpler and shorter.
