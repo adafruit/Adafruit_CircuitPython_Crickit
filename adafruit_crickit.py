@@ -47,9 +47,9 @@ import board
 
 from micropython import const
 
-#pylint: disable=wrong-import-position
+# pylint: disable=wrong-import-position
 try:
-    lib_index = sys.path.index("/lib")        # pylint: disable=invalid-name
+    lib_index = sys.path.index("/lib")  # pylint: disable=invalid-name
     if lib_index < sys.path.index(".frozen"):
         # Prefer frozen modules over those in /lib.
         sys.path.insert(lib_index, ".frozen")
@@ -95,9 +95,10 @@ _TOUCH4 = const(7)
 _NEOPIXEL = const(20)
 _SS_PIXEL = const(27)
 
-#pylint: disable=too-few-public-methods
+# pylint: disable=too-few-public-methods
 class CrickitTouchIn:
     """Imitate touchio.TouchIn."""
+
     def __init__(self, seesaw, pin):
         self._seesaw = seesaw
         self._pin = pin
@@ -114,7 +115,7 @@ class CrickitTouchIn:
         return self.raw_value > self.threshold
 
 
-#pylint: disable=too-many-public-methods
+# pylint: disable=too-many-public-methods
 class Crickit:
     """Represents a Crickit board. Provides a number of devices available via properties, such as
     ``servo_1``. Devices are created on demand the first time they are referenced.
@@ -260,7 +261,9 @@ class Crickit:
     def _motor(self, terminals, motor_class):
         device = self._devices.get(terminals, None)
         if not isinstance(device, motor_class):
-            device = motor_class(*(PWMOut(self._seesaw, terminal) for terminal in terminals))
+            device = motor_class(
+                *(PWMOut(self._seesaw, terminal) for terminal in terminals)
+            )
             self._devices[terminals] = device
         return device
 
@@ -345,8 +348,9 @@ class Crickit:
             raise ValueError("Call init_neopixel first")
         return self._neopixel
 
-
-    def init_neopixel(self, n, *, bpp=3, brightness=1.0, auto_write=True, pixel_order=None):
+    def init_neopixel(
+        self, n, *, bpp=3, brightness=1.0, auto_write=True, pixel_order=None
+    ):
         """Set up a seesaw.NeoPixel object
 
         .. note:: On the CPX Crickit board, the NeoPixel terminal is by default
@@ -366,10 +370,19 @@ class Crickit:
           crickit.init_neopixel(24)
           crickit.neopixel.fill((100, 0, 0))
         """
-        from adafruit_seesaw.neopixel import NeoPixel
-        self._neopixel = NeoPixel(self._seesaw, _NEOPIXEL, n, bpp=bpp,
-                                  brightness=brightness, auto_write=auto_write,
-                                  pixel_order=pixel_order)
+        from adafruit_seesaw.neopixel import (  # pylint: disable=import-outside-toplevel
+            NeoPixel,
+        )
+
+        self._neopixel = NeoPixel(
+            self._seesaw,
+            _NEOPIXEL,
+            n,
+            bpp=bpp,
+            brightness=brightness,
+            auto_write=auto_write,
+            pixel_order=pixel_order,
+        )
 
     @property
     def onboard_pixel(self):
@@ -377,10 +390,19 @@ class Crickit:
         Initialize on-board NeoPixel and clear upon first use.
         """
         if not self._onboard_pixel:
-            from adafruit_seesaw.neopixel import NeoPixel
-            self._onboard_pixel = NeoPixel(self._seesaw, _SS_PIXEL, 1, bpp=3,
-                                           brightness=1.0, auto_write=True,
-                                           pixel_order=None)
+            from adafruit_seesaw.neopixel import (  # pylint: disable=import-outside-toplevel
+                NeoPixel,
+            )
+
+            self._onboard_pixel = NeoPixel(
+                self._seesaw,
+                _SS_PIXEL,
+                1,
+                bpp=3,
+                brightness=1.0,
+                auto_write=True,
+                pixel_order=None,
+            )
             self._onboard_pixel.fill((0, 0, 0))
         return self._onboard_pixel
 
@@ -388,9 +410,10 @@ class Crickit:
         """Reset the whole Crickit board."""
         self._seesaw.sw_reset()
 
-crickit = None # pylint: disable=invalid-name
+
+crickit = None  # pylint: disable=invalid-name
 """A singleton instance to control a single Crickit board, controlled by the default I2C pins."""
 
 # Sphinx's board is missing real pins so skip the constructor in that case.
 if "I2C" in dir(board):
-    crickit = Crickit(Seesaw(board.I2C())) # pylint: disable=invalid-name
+    crickit = Crickit(Seesaw(board.I2C()))  # pylint: disable=invalid-name
