@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2021 ladyada for Adafruit Industries
+# SPDX-License-Identifier: MIT
+
 # This is a mock example showing typical usage of the library for each kind of device.
 
 # Add this import if using stepper motors.

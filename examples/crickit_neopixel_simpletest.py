@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2021 ladyada for Adafruit Industries
+# SPDX-License-Identifier: MIT
+
 # Crickit library demo - NeoPixel terminal
 # Note: On CPX Crickit, NeoPixel pin is normally connected to A1, not to seesaw,
 # so this demo would not control the NeoPixel terminal.
