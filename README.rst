@@ -109,6 +109,11 @@ In most cases you just need a couple of imports.
   # or
   crickit.onboard_pixel.fill((255, 24, 255))
 
+Documentation
+=============
+
+API documentation for this library can be found on `Read the Docs <https://circuitpython.readthedocs.io/projects/crickit/en/latest/>`_.
+
 Contributing
 ============
 
