@@ -147,7 +147,7 @@ class Crickit:
         self._seesaw.pin_mapping = Crickit_Pinmap
         # Associate terminal(s) with certain devices.
         # Used to find existing devices.
-        self._devices = dict()
+        self._devices = {}
         self._neopixel = None
         self._onboard_pixel = None
 
