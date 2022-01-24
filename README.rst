@@ -2,7 +2,7 @@ Introduction
 ============
 
 .. image:: https://readthedocs.org/projects/adafruit-circuitpython-crickit/badge/?version=latest
-    :target: https://circuitpython.readthedocs.io/projects/crickit/en/latest/
+    :target: https://docs.circuitpython.org/projects/crickit/en/latest/
     :alt: Documentation Status
 
 .. image:: https://img.shields.io/discord/327254708534116352.svg
@@ -112,7 +112,7 @@ In most cases you just need a couple of imports.
 Documentation
 =============
 
-API documentation for this library can be found on `Read the Docs <https://circuitpython.readthedocs.io/projects/crickit/en/latest/>`_.
+API documentation for this library can be found on `Read the Docs <https://docs.circuitpython.org/projects/crickit/en/latest/>`_.
 
 Contributing
 ============
