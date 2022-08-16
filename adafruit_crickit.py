@@ -47,7 +47,7 @@ from adafruit_motor.servo import Servo, ContinuousServo
 from adafruit_motor.motor import DCMotor
 from adafruit_motor.stepper import StepperMotor
 
-__version__ = "0.0.0-auto.0"
+__version__ = "0.0.0+auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_Crickit.git"
 
 
