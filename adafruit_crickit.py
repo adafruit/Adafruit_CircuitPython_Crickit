@@ -78,6 +78,7 @@ _TOUCH4 = const(7)
 _NEOPIXEL = const(20)
 _SS_PIXEL = const(27)
 
+
 # pylint: disable=too-few-public-methods
 class CrickitTouchIn:
     """Imitate touchio.TouchIn."""
