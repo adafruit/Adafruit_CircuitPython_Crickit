@@ -43,13 +43,13 @@ except ValueError:
 from adafruit_seesaw.seesaw import Seesaw
 from adafruit_seesaw.crickit import Crickit_Pinmap
 from adafruit_seesaw.pwmout import PWMOut
+from adafruit_seesaw.neopixel import NeoPixel
 from adafruit_motor.servo import Servo, ContinuousServo
 from adafruit_motor.motor import DCMotor
 from adafruit_motor.stepper import StepperMotor
 
 try:
     from typing import Any, Tuple, Type, Union
-    from adafruit_seesaw.neopixel import NeoPixel
 except ImportError:
     pass
 
@@ -339,7 +339,12 @@ class Crickit:
         return self._neopixel
 
     def init_neopixel(
-        self, n: int, *, bpp: int = 3, brightness: float = 1.0, auto_write: bool = True,
+        self,
+        n: int,
+        *,
+        bpp: int = 3,
+        brightness: float = 1.0,
+        auto_write: bool = True,
         pixel_order: Union[str, Tuple] = None
     ) -> None:
         """Set up a seesaw.NeoPixel object
@@ -361,9 +366,6 @@ class Crickit:
           crickit.init_neopixel(24)
           crickit.neopixel.fill((100, 0, 0))
         """
-        from adafruit_seesaw.neopixel import (  # pylint: disable=import-outside-toplevel
-            NeoPixel,
-        )
 
         self._neopixel = NeoPixel(
             self._seesaw,
@@ -381,10 +383,6 @@ class Crickit:
         Initialize on-board NeoPixel and clear upon first use.
         """
         if not self._onboard_pixel:
-            from adafruit_seesaw.neopixel import (  # pylint: disable=import-outside-toplevel
-                NeoPixel,
-            )
-
             self._onboard_pixel = NeoPixel(
                 self._seesaw,
                 _SS_PIXEL,
