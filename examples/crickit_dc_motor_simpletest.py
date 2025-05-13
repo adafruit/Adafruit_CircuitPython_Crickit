@@ -4,6 +4,7 @@
 # Crickit library demo - DC motor
 
 import time
+
 from adafruit_crickit import crickit
 
 # Run motor on Motor 1 terminals forward at full speed and then backward at half speed.
