@@ -6,10 +6,9 @@
 # so this demo would not control the NeoPixel terminal.
 # On the Crickit FeatherWing, the NeoPixel terminal is controlled by seesaw.
 
-# pylint can't figure out "np" can be indexed.
-# pylint: disable=unsupported-assignment-operation
 
 import time
+
 from adafruit_crickit import crickit
 
 # Strip or ring of 8 NeoPixels

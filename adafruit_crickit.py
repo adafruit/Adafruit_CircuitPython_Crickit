@@ -27,12 +27,10 @@ Implementation Notes
 import sys
 
 import board
-
 from micropython import const
 
-# pylint: disable=wrong-import-position
 try:
-    lib_index = sys.path.index("/lib")  # pylint: disable=invalid-name
+    lib_index = sys.path.index("/lib")
     if lib_index < sys.path.index(".frozen"):
         # Prefer frozen modules over those in /lib.
         sys.path.insert(lib_index, ".frozen")
@@ -40,13 +38,13 @@ except ValueError:
     # Don't change sys.path if it doesn't contain "lib" or ".frozen".
     pass
 
-from adafruit_seesaw.seesaw import Seesaw
-from adafruit_seesaw.crickit import Crickit_Pinmap
-from adafruit_seesaw.pwmout import PWMOut
-from adafruit_seesaw.neopixel import NeoPixel
-from adafruit_motor.servo import Servo, ContinuousServo
 from adafruit_motor.motor import DCMotor
+from adafruit_motor.servo import ContinuousServo, Servo
 from adafruit_motor.stepper import StepperMotor
+from adafruit_seesaw.crickit import Crickit_Pinmap
+from adafruit_seesaw.neopixel import NeoPixel
+from adafruit_seesaw.pwmout import PWMOut
+from adafruit_seesaw.seesaw import Seesaw
 
 try:
     from typing import Any, Tuple, Type, Union
@@ -85,7 +83,6 @@ _NEOPIXEL = const(20)
 _SS_PIXEL = const(27)
 
 
-# pylint: disable=too-few-public-methods
 class CrickitTouchIn:
     """Imitate touchio.TouchIn."""
 
@@ -105,7 +102,6 @@ class CrickitTouchIn:
         return self.raw_value > self.threshold
 
 
-# pylint: disable=too-many-public-methods
 class Crickit:
     """Represents a Crickit board. Provides a number of devices available via properties, such as
     ``servo_1``. Devices are created on demand the first time they are referenced.
@@ -251,9 +247,7 @@ class Crickit:
     def _motor(self, terminals: Tuple[int, ...], motor_class: Type) -> Any:
         device = self._devices.get(terminals, None)
         if not isinstance(device, motor_class):
-            device = motor_class(
-                *(PWMOut(self._seesaw, terminal) for terminal in terminals)
-            )
+            device = motor_class(*(PWMOut(self._seesaw, terminal) for terminal in terminals))
             self._devices[terminals] = device
         return device
 
@@ -345,7 +339,7 @@ class Crickit:
         bpp: int = 3,
         brightness: float = 1.0,
         auto_write: bool = True,
-        pixel_order: Union[str, Tuple] = None
+        pixel_order: Union[str, Tuple] = None,
     ) -> None:
         """Set up a seesaw.NeoPixel object
 
@@ -400,9 +394,9 @@ class Crickit:
         self._seesaw.sw_reset()
 
 
-crickit = None  # pylint: disable=invalid-name
+crickit = None
 """A singleton instance to control a single Crickit board, controlled by the default I2C pins."""
 
 # Sphinx's board is missing real pins so skip the constructor in that case.
 if "I2C" in dir(board):
-    crickit = Crickit(Seesaw(board.I2C()))  # pylint: disable=invalid-name
+    crickit = Crickit(Seesaw(board.I2C()))
