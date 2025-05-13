@@ -6,7 +6,6 @@
 # so this demo would not control the NeoPixel terminal.
 # On the Crickit FeatherWing, the NeoPixel terminal is controlled by seesaw.
 
-# "np" can be indexed as it's a NeoPixel instance.
 
 import time
 
